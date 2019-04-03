@@ -1,0 +1,11 @@
+#!/bin/bash
+mkdir ~/.bluetooth-proximity-locking > /dev/null
+chmod +x btpl.sh
+mkdir bin
+mv btpl.sh bin/btpl
+if ! grep -Fq 'export PATH=$PATH":$HOME/.bluetooth-proximity-locking/bin"' ~/.profile
+then
+    echo 'export PATH=$PATH":$HOME/.bluetooth-proximity-locking/bin"' >> ~/.profile
+fi
+mv * ~/.bluetooth-proximity-locking/ > /dev/null
+source ~/.profile
