@@ -6,6 +6,25 @@ import time
 import sys
 import os
 
+# time between searches for device, in seconds
+scanPeriod = 2.5
+# command to run when the device leaves desired range
+leftRange = "gnome-screensaver-command -l"
+# command to run when the device enters desired range
+enteredRange = "gnome-screensaver-command -d"
+# maximum number of times the device can be out of range before the PC is locked
+maxMissed = 3
+# range at which PC is locked (0 - rangeLimit = RSSI)
+rangeLimit = 7
+# get Bluetooth address of target device
+BTAddress = sys.argv[1]
+# initiate variables for use when processing RSSIs
+status = "gone"
+awayCounter = maxMissed
+screenLocked = False
+BTInRange = True
+firstRun = True
+
 # function for retrieving the RSSI of the desired bluetooth device
 def getRSSI():
 	# get output from terminal command that retrieves device name
@@ -27,31 +46,12 @@ if len(sys.argv) < 2:
 	print("Usage: btpl.py <bluetooth address>")
 	sys.exit(1)
 
-# time between searches for device, in seconds
-scanPeriod = 2.5
-# command to run when the device leaves desired range
-leftRange = "gnome-screensaver-command -l"
-# command to run when the device enters desired range
-enteredRange = "gnome-screensaver-command -d"
-# maximum number of times the device can be out of range before the PC is locked
-maxMissed = 3
-# range at which PC is locked (0 - rangeLimit = RSSI)
-rangeLimit = 7
-# get Bluetooth address of target device
-BTAddress = sys.argv[1]
-# initiate variables for use when processing RSSIs
-status = "gone"
-awayCounter = maxMissed
-screenLocked = False
-BTInRange = True
-firstRun = True
-
 # tell user the program is running
 print("Identifying device...")
 
 try:
 	# display device name, with the first part bold & green
-	print("\033[1;32m[OK]\033[0;37m Device found:", bluetooth.lookup_name(BTAddress,timeout=5))
+	print("\033[1;32m[OK]\033[0m Device found:", bluetooth.lookup_name(BTAddress,timeout=5))
 
 	# run forever
 	while True:
@@ -91,7 +91,7 @@ try:
 				os.system(leftRange)
 
 		# print current Bluetooth data, with the first part bold & green
-		print("\033[1;32m[OK]\033[0;37m RSSI:", rssi, "|", "Status:", status, "|", "Away counter:", awayCounter, "|", "Device in range:", BTInRange, "|", "Screen locked:", screenLocked, "|", time.strftime('%H:%M:%S'))
+		print("\033[1;32m[OK]\033[0m RSSI:", rssi, "|", "Status:", status, "|", "Away counter:", awayCounter, "|", "Device in range:", BTInRange, "|", "Screen locked:", screenLocked, "|", time.strftime('%H:%M:%S'))
 
 		# wait for specified time before checking device status again
 		time.sleep(scanPeriod)
@@ -99,4 +99,4 @@ try:
 # usually happens when bluetooth is disabled
 except:
 	# display error message, with the first part bold & red
-	print("\033[1;31m[ERROR]\033[0;37m Bluetooth on PC is not active")
+	print("\033[1;31m[ERROR]\033[0m Bluetooth on PC is not active")

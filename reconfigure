@@ -13,62 +13,43 @@ then
 fi
 
 # set user-specific config options, if arguments aren't "x"
-sed -i "s/\[bluetooth address\]/$1/g" btpl.sh
+sed -i "s/\[bluetooth address\]/$1/g" ~/.bluetooth-proximity-locking/btpl.sh
 echo -e "\033[1;32m[OK]\033[0m Bluetooth address set"
 if [ "$2" != "x" ]
 then
-    sed -i "s/scanPeriod = 2.5/scanPeriod = $2/g" btpl.py
+    sed -i "s/scanPeriod = 2.5/scanPeriod = $2/g" ~/.bluetooth-proximity-locking/btpl.py
     echo -e "\033[1;32m[OK]\033[0m Scan period set"
 else
     echo -e "\033[1;32m[OK]\033[0m Scan period left as default"
 fi
 if [ "$3" != "x" ]
 then
-    sed -i "s/leftRange = \"gnome-screensaver-command -l\"/leftRange = $3/g" btpl.py
+    sed -i "s/leftRange = \"gnome-screensaver-command -l\"/leftRange = $3/g" ~/.bluetooth-proximity-locking/btpl.py
     echo -e "\033[1;32m[OK]\033[0m Left range command set"
 else
     echo -e "\033[1;32m[OK]\033[0m Left range command left as default"
 fi
 if [ "$4" != "x" ]
 then
-    sed -i "s/enteredRange = \"gnome-screensaver-command -d\"/enteredRange = $4/g" btpl.py
+    sed -i "s/enteredRange = \"gnome-screensaver-command -d\"/enteredRange = $4/g" ~/.bluetooth-proximity-locking/btpl.py
     echo -e "\033[1;32m[OK]\033[0m Entered range command set"
 else
     echo -e "\033[1;32m[OK]\033[0m Entered range command left as default"
 fi
 if [ "$5" != "x" ]
 then
-    sed -i "s/maxMissed = 3/maxMissed = $5/g" btpl.py
+    sed -i "s/maxMissed = 3/maxMissed = $5/g" ~/.bluetooth-proximity-locking/btpl.py
     echo -e "\033[1;32m[OK]\033[0m Maximum missed set"
 else
     echo -e "\033[1;32m[OK]\033[0m Maximum missed left as default"
 fi
 if [ "$6" != "x" ]
 then
-    sed -i "s/rangeLimit = 7/rangeLimit = $6/g" btpl.py
+    sed -i "s/rangeLimit = 7/rangeLimit = $6/g" ~/.bluetooth-proximity-locking/btpl.py
     echo -e "\033[1;32m[OK]\033[0m Range limit set"
 else
     echo -e "\033[1;32m[OK]\033[0m Range limit left as default"
 fi
-
-# set permissions for files that need to be executable
-chmod +x btpl.sh reconfigure
-# reorganise files
-mkdir ~/.bluetooth-proximity-locking > /dev/null 2>&1
-mkdir bin > /dev/null 2>&1
-mv btpl.sh bin/btpl > /dev/null 2>&1
-# add command 'btpl' to PATH
-if ! grep -Fq 'export PATH=$PATH":$HOME/.bluetooth-proximity-locking/bin"' ~/.profile
-then
-    echo 'export PATH=$PATH":$HOME/.bluetooth-proximity-locking/bin"' >> ~/.profile
-    echo -e "\033[1;32m[OK]\033[0m Command 'btpl' added to PATH successfully"
-fi
-# move files to a hidden folder in the user's home folder
-mv * ~/.bluetooth-proximity-locking/ > /dev/null 2>&1
-echo -e "\033[1;32m[OK]\033[0m Files reorganised successfully"
-# refresh PATH
-source ~/.profile
-echo -e "\033[1;32m[OK]\033[0m PATH refreshed successfully"
 
 # display final success message
 echo -e "\033[1;32m[OK]\033[0m Bluetooth Proximity Locking configured successfully"
