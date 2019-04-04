@@ -1,4 +1,5 @@
 #/bin/sh
+
 if [ $# \< 2 ]
 then
     python3 ~/.bluetooth-proximity-locking/btpl.py [bluetooth address] > /dev/null &
