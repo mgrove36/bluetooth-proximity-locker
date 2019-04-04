@@ -57,7 +57,8 @@ chmod +x btpl.sh reconfigure
 mkdir ~/.bluetooth-proximity-locking > /dev/null 2>&1
 mkdir bin > /dev/null 2>&1
 mv btpl.sh bin/btpl > /dev/null 2>&1
-# add command 'btpl' to PATH
+mv reconfigure bin/btpl-reconfig > /dev/null 2>&1
+# add commands 'btpl' and 'btpl-reconfig' to PATH
 if ! grep -Fq 'export PATH=$PATH":$HOME/.bluetooth-proximity-locking/bin"' ~/.profile
 then
     echo 'export PATH=$PATH":$HOME/.bluetooth-proximity-locking/bin"' >> ~/.profile

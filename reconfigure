@@ -13,43 +13,48 @@ then
 fi
 
 # set user-specific config options, if arguments aren't "x"
-sed -i "s/\[bluetooth address\]/$1/g" ~/.bluetooth-proximity-locking/btpl.sh
-echo -e "\033[1;32m[OK]\033[0m Bluetooth address set"
+if [ "$2" != "x" ]
+then
+    sed -i "s/\[bluetooth address\]/$1/g" ~/.bluetooth-proximity-locking/btpl.sh
+    echo -e "\033[1;32m[OK]\033[0m Bluetooth address set"
+else
+    echo -e "\033[1;32m[OK]\033[0m Bluetooth address left as before"
+fi
 if [ "$2" != "x" ]
 then
     sed -i "s/scanPeriod = 2.5/scanPeriod = $2/g" ~/.bluetooth-proximity-locking/btpl.py
     echo -e "\033[1;32m[OK]\033[0m Scan period set"
 else
-    echo -e "\033[1;32m[OK]\033[0m Scan period left as default"
+    echo -e "\033[1;32m[OK]\033[0m Scan period left as before"
 fi
 if [ "$3" != "x" ]
 then
     sed -i "s/leftRange = \"gnome-screensaver-command -l\"/leftRange = $3/g" ~/.bluetooth-proximity-locking/btpl.py
     echo -e "\033[1;32m[OK]\033[0m Left range command set"
 else
-    echo -e "\033[1;32m[OK]\033[0m Left range command left as default"
+    echo -e "\033[1;32m[OK]\033[0m Left range command left as before"
 fi
 if [ "$4" != "x" ]
 then
     sed -i "s/enteredRange = \"gnome-screensaver-command -d\"/enteredRange = $4/g" ~/.bluetooth-proximity-locking/btpl.py
     echo -e "\033[1;32m[OK]\033[0m Entered range command set"
 else
-    echo -e "\033[1;32m[OK]\033[0m Entered range command left as default"
+    echo -e "\033[1;32m[OK]\033[0m Entered range command left as before"
 fi
 if [ "$5" != "x" ]
 then
     sed -i "s/maxMissed = 3/maxMissed = $5/g" ~/.bluetooth-proximity-locking/btpl.py
     echo -e "\033[1;32m[OK]\033[0m Maximum missed set"
 else
-    echo -e "\033[1;32m[OK]\033[0m Maximum missed left as default"
+    echo -e "\033[1;32m[OK]\033[0m Maximum missed left as before"
 fi
 if [ "$6" != "x" ]
 then
     sed -i "s/rangeLimit = 7/rangeLimit = $6/g" ~/.bluetooth-proximity-locking/btpl.py
     echo -e "\033[1;32m[OK]\033[0m Range limit set"
 else
-    echo -e "\033[1;32m[OK]\033[0m Range limit left as default"
+    echo -e "\033[1;32m[OK]\033[0m Range limit left as before"
 fi
 
 # display final success message
-echo -e "\033[1;32m[OK]\033[0m Bluetooth Proximity Locking configured successfully"
+echo -e "\033[1;32m[OK]\033[0m Bluetooth Proximity Locking reconfigured successfully"
