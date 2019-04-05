@@ -16,8 +16,6 @@ enteredRange = "gnome-screensaver-command -d"
 maxMissed = 3
 # range at which PC is locked (0 - rangeLimit = RSSI)
 rangeLimit = 7
-# get Bluetooth address of target device
-BTAddress = sys.argv[1]
 # initiate variables for use when processing RSSIs
 status = "gone"
 awayCounter = maxMissed
@@ -29,7 +27,7 @@ firstRun = True
 def getRSSI():
 	# get output from terminal command that retrieves device name
 	try:
-	    rssi = subprocess.check_output('hcitool rssi [bluetooth address]', shell=True, stderr=subprocess.DEVNULL)
+	    rssi = subprocess.check_output("hcitool rssi " + BTAddress, shell=True, stderr=subprocess.DEVNULL)
 	except Exception as e:
 	    rssi = str(e.output)
 
@@ -45,6 +43,9 @@ def getRSSI():
 if len(sys.argv) < 2:
 	print("Usage: btpl.py <bluetooth address>")
 	sys.exit(1)
+
+# get Bluetooth address of target device
+BTAddress = sys.argv[1]
 
 # tell user the program is running
 print("Identifying device...")
