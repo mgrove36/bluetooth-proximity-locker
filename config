@@ -70,6 +70,8 @@ echo -e "\033[1;32m[OK]\033[0m Files reorganised successfully"
 # refresh PATH
 source ~/.profile
 echo -e "\033[1;32m[OK]\033[0m PATH refreshed successfully"
+# delete current directory (the one cloned from GitHub)
+rmdir "$(pwd -P)"
 
 # display final success message
 echo -e "\033[1;32m[OK]\033[0m Bluetooth Proximity Locking configured successfully"
